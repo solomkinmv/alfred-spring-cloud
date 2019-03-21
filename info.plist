@@ -228,6 +228,8 @@
 			<integer>170</integer>
 		</dict>
 	</dict>
+	<key>version</key>
+	<string>0.0.1</string>
 	<key>webaddress</key>
 	<string></string>
 </dict>

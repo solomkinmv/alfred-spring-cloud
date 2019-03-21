@@ -71,7 +71,7 @@ EXCLUDE_PATTERNS = [
     '*.dist-info',
     '*.egg-info',
     '*.iml',
-    'workflow-build.py'
+    'build-scripts'
 ]
 
 log = logging.getLogger('')
