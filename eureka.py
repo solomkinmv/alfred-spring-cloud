@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from workflow import Workflow, ICON_WEB, ICON_WARNING, ICON_INFO, web
+from workflow import Workflow3, ICON_WEB, ICON_WARNING, ICON_INFO, web
 import argparse
 
 log = None
@@ -103,18 +103,32 @@ def main(wf):
     # the list of results for Alfred
     for app in apps:
         instance = app['instance'][0]
-        wf.add_item(title=app['name'],
-                    subtitle=instance['hostName'],
-                    arg=instance['statusPageUrl'],
-                    valid=True,
-                    icon=ICON_WEB)
+        home_page_url = instance['homePageUrl']
+        status_page_url = instance['statusPageUrl']
+        health_check_url = instance['healthCheckUrl']
+
+        item = wf.add_item(title=app['name'],
+                           subtitle='Open info: ' + status_page_url,
+                           arg=status_page_url,
+                           valid=True, icon=ICON_WEB, )
+        item.add_modifier(key='cmd',
+                          subtitle='Open health: ' + health_check_url,
+                          arg=health_check_url)
+        item.add_modifier(key='alt',
+                          subtitle='Open home page: ' + home_page_url,
+                          arg=home_page_url
+                          )
+        item.add_modifier(key='shift',
+                          subtitle='Copy url: ' + home_page_url,
+                          arg=home_page_url
+                          ).setvar('copy', 'true')
 
     # Send the results to Alfred as XML
     wf.send_feedback()
 
 
 if __name__ == u"__main__":
-    wf = Workflow(update_settings={
+    wf = Workflow3(update_settings={
         'github_slug': 'solomkinmv/alfred-spring-cloud'
     })
 
