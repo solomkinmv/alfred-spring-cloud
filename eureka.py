@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-from workflow import Workflow, ICON_WEB, ICON_WARNING, web
+from workflow import Workflow, ICON_WEB, ICON_WARNING, ICON_INFO, web
 import argparse
 
 log = None
@@ -114,7 +114,16 @@ def main(wf):
 
 
 if __name__ == u"__main__":
-    wf = Workflow()
+    wf = Workflow(update_settings={
+        'github_slug': 'solomkinmv/alfred-spring-cloud'
+    })
+
+    if wf.update_available:
+        # Add a notification to top of Script Filter results
+        wf.add_item('New version available',
+                    'Action this item to install the update',
+                    autocomplete='workflow:update',
+                    icon=ICON_INFO)
+
     log = wf.logger
     wf.run(main)
-    # sys.exit(wf.run(main))
